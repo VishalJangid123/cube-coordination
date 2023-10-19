@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 1a47845b14ca64d30877c6e968127770
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Labrada
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 614f3c370b54243a1a02548b918fbc36, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
