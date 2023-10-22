@@ -37,6 +37,7 @@ public class AudioManager : MonoBehaviour
 
     public void SetAudioSetting()
     {
-        audioSource.mute = GameManager.Instance.VolumeMute;
+        audioSource = GetComponent<AudioSource>();
+        audioSource.mute = GameManager.Instance.IsMuted;
     }
 }

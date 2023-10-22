@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class PlayerSwitchController : MonoBehaviour
 {
-    public PlayerController cubeA;
-    public PlayerController cubeB;
+    private PlayerController player;
+    private PlayerController playerMirror;
 
     [SerializeField] SpriteRenderer levelCompleteP1;
     [SerializeField] SpriteRenderer levelCompleteP2;
@@ -17,9 +17,11 @@ public class PlayerSwitchController : MonoBehaviour
 
     private void Start()
     {
-        // Initialize control to CubeA
-        cubeA.TakeControl();
-        cubeB.ReleaseControl();
+        player = FindObjectOfType<Player>();
+        playerMirror = FindObjectOfType<PlayerMirror>();
+
+        player.TakeControl();
+        playerMirror.ReleaseControl();
 
         baseColor = levelCompleteP1.color;
 
@@ -35,15 +37,15 @@ public class PlayerSwitchController : MonoBehaviour
             SwitchControl();
         }
 
-        if(cubeA.playerReached && cubeB.playerReached)
+        if(player.playerReached && playerMirror.playerReached)
         {
             print("you win");
             GameManager.Instance.LevelComplete();
-            cubeA.isControlled = false;
-            cubeB.isControlled = false;
+            player.isControlled = false;
+            playerMirror.isControlled = false;
         }
 
-        if (cubeA.playerReached)
+        if (player.playerReached)
         {
             levelCompleteP1.material.color = highlightColor;
         }
@@ -52,7 +54,7 @@ public class PlayerSwitchController : MonoBehaviour
             levelCompleteP1.material.color = baseColor;
         }
 
-        if (cubeB.playerReached)
+        if (playerMirror.playerReached)
         {
             levelCompleteP2.material.color = highlightColor;
         }
@@ -65,25 +67,25 @@ public class PlayerSwitchController : MonoBehaviour
 
     private void SwitchControl()
     {
-        if (cubeA.isControlled)
+        if (player.isControlled)
         {
-            cubeA.ReleaseControl();
-            cubeB.TakeControl();
+            player.ReleaseControl();
+            playerMirror.TakeControl();
         }
         else
         {
-            cubeA.TakeControl();
-            cubeB.ReleaseControl();
+            player.TakeControl();
+            playerMirror.ReleaseControl();
         }
     }
 
     public void PlayerDie()
     {
-        ParticleSystem _ps1  = Instantiate(ps, cubeA.transform.position, Quaternion.identity);
-        ParticleSystem _ps2 = Instantiate(ps, cubeB.transform.position, Quaternion.identity);
+        ParticleSystem _ps1  = Instantiate(ps, player.transform.position, Quaternion.identity);
+        ParticleSystem _ps2 = Instantiate(ps, playerMirror.transform.position, Quaternion.identity);
         _ps1.Play();
         _ps2.Play();
-        Destroy(cubeA.gameObject);
-        Destroy(cubeB.gameObject);
+        Destroy(player.gameObject);
+        Destroy(playerMirror.gameObject);
     }
 }

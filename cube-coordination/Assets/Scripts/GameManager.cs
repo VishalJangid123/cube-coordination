@@ -12,16 +12,16 @@ public class GameManager : MonoBehaviour
 
     public bool gameOver = false;
 
-    readonly string CURRENT_LEVEL_PREFS = "currentlevel";
-    readonly string LEVEL_TIMER_PREFS = "level_";
-    readonly string VOLUME_MUTE = "volume_mute";
+    
 
-    public int volumeMute; // 0 = unmute; 1= mute
-    public bool VolumeMute {
-        get { return volumeMute == 1 ? true : false; }
+    public bool isMuted; // 0 = unmute; 1= mute
+    public bool IsMuted {
+        get { return PlayerPrefs.GetInt(Env.VOLUME_MUTE, 0) == 1; }
         set {
-            volumeMute = value == true ? 1 : 0;
-            PlayerPrefs.SetInt(VOLUME_MUTE, volumeMute); SetVolumeSetting();  }
+            
+            PlayerPrefs.SetInt(Env.VOLUME_MUTE, value ? 1 : 0);
+            UpdateVolumeSetting();
+        }
     }
 
     private void Awake()
@@ -34,25 +34,15 @@ public class GameManager : MonoBehaviour
         Instance = this;
         AudioManager = GetComponent<AudioManager>();
         UIManager = GetComponent<UIManager>();
-
-        if (PlayerPrefs.HasKey(VOLUME_MUTE))
-        {
-            volumeMute = PlayerPrefs.GetInt(VOLUME_MUTE);
-        }
-        else
-        {
-            volumeMute = 0;
-        }
-
     }
 
     private void Start()
     {
         
-        SetVolumeSetting();
+        UpdateVolumeSetting();
     }
 
-    private void SetVolumeSetting()
+    private void UpdateVolumeSetting()
     {
         UIManager.SetAudioSetting();
         AudioManager.SetAudioSetting();
@@ -68,7 +58,7 @@ public class GameManager : MonoBehaviour
     public void LevelComplete()
     {
         gameOver = true;
-        PlayerPrefs.SetInt(CURRENT_LEVEL_PREFS, SceneManager.GetActiveScene().buildIndex);
+        PlayerPrefs.SetInt(Env.CURRENT_LEVEL_PREFS, SceneManager.GetActiveScene().buildIndex);
 
         AudioManager.PlayLevelCompleteSound();
         UIManager.ShowLevelCompletePanel();

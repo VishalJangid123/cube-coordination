@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,10 @@ public class MainMenuUIHandler : MonoBehaviour
     [Header("Start Menu Panel")]
     [SerializeField] private GameObject startMenuPanel;
     [SerializeField] private CustomButton startButton;
+    [SerializeField] private CustomButton howToPlayButton;
+    [SerializeField] private CustomButton creditsButton;
+    [SerializeField] private Button volumeButton;
+    [SerializeField] private Image volumeButtonImage;
 
     [Header("Loading")]
     [SerializeField] private CanvasGroup loadingPanelCG;
@@ -17,17 +22,49 @@ public class MainMenuUIHandler : MonoBehaviour
     [SerializeField] private Transform levelButtonContentParent;
     [SerializeField] private GameObject levelButtonPrefab;
 
-    readonly string CURRENT_LEVEL_PREFS = "currentlevel";
-    readonly string LEVEL_TIMER_PREFS = "level_";
+
+    [Header("How To play")]
+    [SerializeField] private GameObject howToPlayPanel;
+    [SerializeField] private CustomButton backToHomeButton;
+
+
+   
 
     int currentLevel = 0;
+
+    public Sprite volumeSprite;
+    public Sprite volumeMuteSprite;
+
+
+    public bool isMuted; // 0 = unmute; 1= mute
+    public bool IsMuted
+    {
+        get { return PlayerPrefs.GetInt(Env.VOLUME_MUTE) == 1; }
+        set
+        {
+            PlayerPrefs.SetInt(Env.VOLUME_MUTE, value ? 1 : 0);
+            UpdateVolumeSetting();
+        }
+    }
+
+    private void UpdateVolumeSetting()
+    {
+        print("update called");
+        volumeButtonImage.sprite = IsMuted ? volumeMuteSprite : volumeSprite;
+    }
+
+    private void Awake()
+    {
+        volumeSprite = Resources.Load<Sprite>("volume");
+        volumeMuteSprite = Resources.Load<Sprite>("volume-mute");
+    }
 
     private void Start()
     {
 
-        if (PlayerPrefs.HasKey(CURRENT_LEVEL_PREFS))
+        if (PlayerPrefs.HasKey(Env.CURRENT_LEVEL_PREFS))
         {
-            currentLevel = PlayerPrefs.GetInt(CURRENT_LEVEL_PREFS);
+            currentLevel = PlayerPrefs.GetInt(Env.CURRENT_LEVEL_PREFS);
         }
         else
         {
@@ -37,6 +74,30 @@ public class MainMenuUIHandler : MonoBehaviour
         levelPanel.SetActive(false);
 
         startButton.onButtonClick.AddListener(() => { ShowLevelPanel(); });
+        volumeButton.onClick.AddListener(OnVolumeButtonClicked);
+
+        howToPlayButton.onButtonClick.RemoveAllListeners();
+        howToPlayButton.onButtonClick.AddListener(() =>
+        {
+            howToPlayPanel.SetActive(true);
+        });
+
+        backToHomeButton.onButtonClick.RemoveAllListeners();
+        backToHomeButton.onButtonClick.AddListener(() =>
+        {
+            howToPlayPanel.SetActive(false);
+        });
+
+        howToPlayPanel.SetActive(false);
+
+        
+
+    //volumeButton.gameObject.GetComponentInChildren<Image>().sprite = Env.GetVolumeStatus() ? volumeSprite : volumeMuteSprite;
+}
+
+    private void OnVolumeButtonClicked()
+    {
+        IsMuted = !IsMuted;
     }
 
     void ShowLevelPanel()
