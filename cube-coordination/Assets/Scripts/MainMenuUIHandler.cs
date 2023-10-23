@@ -26,8 +26,6 @@ public class MainMenuUIHandler : MonoBehaviour
     [Header("How To play")]
     [SerializeField] private GameObject howToPlayPanel;
     [SerializeField] private CustomButton backToHomeButton;
-
-
    
 
     int currentLevel = 0;
@@ -49,7 +47,6 @@ public class MainMenuUIHandler : MonoBehaviour
 
     private void UpdateVolumeSetting()
     {
-        print("update called");
         volumeButtonImage.sprite = IsMuted ? volumeMuteSprite : volumeSprite;
     }
 
@@ -89,10 +86,6 @@ public class MainMenuUIHandler : MonoBehaviour
         });
 
         howToPlayPanel.SetActive(false);
-
-        
-
-    //volumeButton.gameObject.GetComponentInChildren<Image>().sprite = Env.GetVolumeStatus() ? volumeSprite : volumeMuteSprite;
 }
 
     private void OnVolumeButtonClicked()
@@ -107,7 +100,7 @@ public class MainMenuUIHandler : MonoBehaviour
 
         levelPanel.SetActive(true);
 
-        int levels = 4;
+        int levels = UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings - 1;
         for(int level=1; level<= levels; level++)
         {
             GameObject btn = Instantiate(levelButtonPrefab, levelButtonContentParent);

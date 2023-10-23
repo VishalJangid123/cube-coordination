@@ -8,12 +8,10 @@ public class Player : PlayerController
     protected override void HandleMovement(Vector2 moveDir)
     {
         rb.velocity = moveDir;
-        print("move dri=" + moveDir);
         if (moveDir != Vector2.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(transform.forward, moveDir);
             Quaternion rot = Quaternion.RotateTowards(transform.rotation, targetRotation, 5f * Time.deltaTime);
-            print("rotation=" + rot);
             rb.MoveRotation(rot);
         }
     }
@@ -22,7 +20,6 @@ public class Player : PlayerController
     {
         if(collision.gameObject.tag == "WinArea")
         {
-            print("win area");
             playerReached = true;
         }
     }

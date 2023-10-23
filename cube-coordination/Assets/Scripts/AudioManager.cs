@@ -18,7 +18,6 @@ public class AudioManager : MonoBehaviour
         audioSource.clip = bgSound;
         audioSource.Play();
         audioSource.loop = true;
-        print("start");
     }
 
     public void PlayPlayerDieSound()

@@ -11,13 +11,11 @@ public class PlayerMirror : PlayerController
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        print(collision);
         playerReached = true;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         playerReached = false;
-
     }
 }

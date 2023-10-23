@@ -127,9 +127,14 @@ public class UIManager : MonoBehaviour
             StartCoroutine(TweenUtility.FadeCanvasGroup(levelCompletePanelCG, 1, 1));
         });
 
-        if(SceneManager.sceneCount == SceneManager.GetActiveScene().buildIndex)
+        if(SceneManager.sceneCountInBuildSettings - 1 == SceneManager.GetActiveScene().buildIndex)
         {
-            nextLevelButton.gameObject.SetActive(false);
+            foreach(Text text in nextLevelButton.GetComponentsInChildren<Text>())
+            {
+                text.text = "Home";
+            }
+            nextLevelButton.onButtonClick.RemoveAllListeners();
+            nextLevelButton.onButtonClick.AddListener(OnHomeButtonClicked);
         }
         else
         {
@@ -157,10 +162,6 @@ public class UIManager : MonoBehaviour
 
     private void OnNextLevelButtonClicked()
     {
-        if(SceneManager.sceneCount == SceneManager.GetActiveScene().buildIndex)
-        {
-
-        }
         LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 

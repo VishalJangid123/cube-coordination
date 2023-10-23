@@ -39,7 +39,6 @@ public class PlayerSwitchController : MonoBehaviour
 
         if(player.playerReached && playerMirror.playerReached)
         {
-            print("you win");
             GameManager.Instance.LevelComplete();
             player.isControlled = false;
             playerMirror.isControlled = false;

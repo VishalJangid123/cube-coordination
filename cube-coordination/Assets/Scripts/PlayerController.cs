@@ -47,7 +47,6 @@ public class PlayerController : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Cone") && (this is Player || this is PlayerMirror))
         {
-            print("player dead");
             FindObjectOfType<PlayerSwitchController>().PlayerDie();
             GameManager.Instance.GameOver();
         }
@@ -58,22 +57,8 @@ public class PlayerController : MonoBehaviour
         //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // Restart the scene
     }
 
-    //protected virtual void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    print(collision.gameObject.name);
-    //    print(collision.gameObject.tag);
-    //    if (collision.gameObject.tag == "WinArea")
-    //    {
-    //        // Both cubes touched PlatformEnd; end the game
-    //        print("Winnnn");
-    //        EndGame();
-    //    }
-    //}
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        print("trigger out");
-    }
+  
     void HandleInput()
 
     {
