@@ -4,6 +4,7 @@ Welcome to **Cube Coordination**, a 2D puzzle platformer game where players cont
 
 ## Table of Contents
 
+- [Play](#play)
 - [Screenshots](#screenshots)
 - [Gameplay](#gameplay)
 - [Features](#features)
@@ -11,6 +12,10 @@ Welcome to **Cube Coordination**, a 2D puzzle platformer game where players cont
 - [Controls](#controls)
 - [Development](#development)
 - [License](#license)
+
+## Play
+
+[Click here to Play on web](https://vishaljangid123.itch.io/cube-coordination)
 
 ## Screenshots
 ![Cube Coordination Main Menu](Screenshots/SS_0.png)
